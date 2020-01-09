@@ -20,7 +20,7 @@ from paasta_tools.cli.utils import PaastaColors
 from paasta_tools.cli.utils import validate_service_name
 from paasta_tools.deployment_utils import load_v2_deployments_json
 from paasta_tools.utils import DEFAULT_SOA_DIR
-from paasta_tools.utils import get_service_docker_registry
+from paasta_tools.utils import get_service_primary_docker_registry
 from paasta_tools.utils import list_services
 from paasta_tools.utils import paasta_print
 
@@ -71,7 +71,9 @@ def paasta_get_docker_image(args):
         )
         return 1
     else:
-        registry_uri = get_service_docker_registry(service=service, soa_dir=soa_dir)
+        registry_uri = get_service_primary_docker_registry(
+            service=service, soa_dir=soa_dir
+        )
         docker_url = f"{registry_uri}/{docker_image}"
         paasta_print(docker_url)
         return 0

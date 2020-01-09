@@ -2411,7 +2411,11 @@ def test_format_marathon_app_dict_no_smartstack():
         return_value=fake_service_namespace_config,
         autospec=True,
     ), mock.patch(
-        "paasta_tools.utils.get_service_docker_registry",
+        "paasta_tools.utils.get_service_push_docker_registries",
+        return_value=[fake_docker_registry],
+        autospec=True,
+    ), mock.patch(
+        "paasta_tools.utils.get_service_primary_docker_registry",
         return_value=fake_docker_registry,
         autospec=True,
     ), mock.patch(
@@ -2513,7 +2517,11 @@ def test_format_marathon_app_dict_with_smartstack():
         return_value=fake_service_namespace_config,
         autospec=True,
     ), mock.patch(
-        "paasta_tools.utils.get_service_docker_registry",
+        "paasta_tools.utils.get_service_push_docker_registries",
+        return_value=[fake_docker_registry],
+        autospec=True,
+    ), mock.patch(
+        "paasta_tools.utils.get_service_primary_docker_registry",
         return_value=fake_docker_registry,
         autospec=True,
     ), mock.patch(
@@ -2687,8 +2695,8 @@ def test_format_marathon_app_dict_utilizes_extra_volumes():
         return_value=fake_service_namespace_config,
         autospec=True,
     ), mock.patch(
-        "paasta_tools.utils.get_service_docker_registry",
-        return_value=fake_docker_registry,
+        "paasta_tools.utils.get_service_push_docker_registries",
+        return_value=[fake_docker_registry],
         autospec=True,
     ), mock.patch(
         "paasta_tools.marathon_tools.format_job_id",
@@ -2701,6 +2709,10 @@ def test_format_marathon_app_dict_utilizes_extra_volumes():
     ), mock.patch(
         "paasta_tools.marathon_tools.load_system_paasta_config",
         return_value=fake_system_paasta_config,
+        autospec=True,
+    ), mock.patch(
+        "paasta_tools.utils.get_service_primary_docker_registry",
+        return_value=fake_docker_registry,
         autospec=True,
     ):
         actual = fake_marathon_service_config.format_marathon_app_dict()
